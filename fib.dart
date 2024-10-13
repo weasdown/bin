@@ -11,18 +11,10 @@ int fib(int n) {
 
     int result;
 
-    // int result = (fib(n - 1) + fib(n - 2));
-    // int? databaseResult = fibDatabase[n];
-    // print('\t- databaseResult: $databaseResult');
-
-    // if (databaseResult != null) {
-    //   result = databaseResult;
-    // } else {
     int nMinusOne = getPreviousFib(n - 1);
     int nMinusTwo = getPreviousFib(n - 2);
     result = nMinusOne + nMinusTwo;
     print('\t- nMinusOne: ${nMinusOne}, nMinusTwo: ${nMinusTwo}');
-    // print('\t- result for $n: $result');
     fibDatabase.putIfAbsent(
       n,
       () => result,
@@ -35,36 +27,20 @@ int fib(int n) {
           '\t- nMinusOne + nMinusTwo: ${nMinusOne + nMinusTwo}\n');
     }
 
-    // // fibDatabase[n] = {'Num': getPreviousFib(n), 'Sum': result};
-
-    // print('New database entry for $n: ${fibDatabase[n]}');
-
-    // // print('result: $result');
-    // // print('Database sum entry for $n: ${fibDatabase[n]?['Sum']}');
-
-    // // print('Previous Fib: ${getPreviousFib(n - 1)}');
-
-    // // print('n: $n, result: $result');
-    // }
     return result;
   }
 }
 
 int getPreviousFib(int index) {
-  // // print('Supplied index: $index');
   int? result = fibDatabase[index];
-  // print('\t- For $index, result: $result');
-  // // print('Database result for $index: $result');
 
   if (result != null) {
     return result;
   } else {
     int actualResult = fib(index);
-    // print('actualResult for $index: $actualResult');
+
     fibDatabase[index] = actualResult;
     print('\t- getPreviousFib new entry for $index: ${fibDatabase[index]}');
-
-    // // print('Previous result for $index: $result');
 
     return actualResult;
   }
