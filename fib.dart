@@ -4,7 +4,7 @@ int fib(int n) {
   if (n < 0) {
     throw Exception('n must be a positive integer.');
   } else if (n <= 1) {
-    fibDatabase.putIfAbsent(n, () => n);
+    fibDatabase[n] = n;
     return n;
   } else {
     print('\nCalculating Fib($n)...');
@@ -16,16 +16,12 @@ int fib(int n) {
     print('\t- nMinusOne: ${nMinusOne}, nMinusTwo: ${nMinusTwo}');
 
     result = nMinusOne + nMinusTwo;
-
-    fibDatabase.putIfAbsent(
-      n,
-      () => result,
-    );
+    fibDatabase[n] = result; // Save the new result so it can be used later.
 
     if (result < 0) {
       throw Exception('result < 0 for n = $n: $result.\n'
-          '\t- nMinusOne: $nMinusOne\n'
-          '\t- nMinusTwo: $nMinusTwo\n'
+          '\t- nMinusOne (${n - 1}): $nMinusOne\n'
+          '\t- nMinusTwo (${n - 2}): $nMinusTwo\n'
           '\t- nMinusOne + nMinusTwo: ${nMinusOne + nMinusTwo}\n');
     }
 
@@ -37,8 +33,10 @@ int getPreviousFib(int index) {
   int? result = fibDatabase[index];
 
   if (result != null) {
+    print('\t- Got result for $index from database: $result.');
     return result;
   } else {
+    print('\t- Could not find an entry for $index in the database.');
     int actualResult = fib(index);
 
     fibDatabase[index] = actualResult;
