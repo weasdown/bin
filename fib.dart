@@ -13,8 +13,10 @@ int fib(int n) {
 
     int nMinusOne = getPreviousFib(n - 1);
     int nMinusTwo = getPreviousFib(n - 2);
-    result = nMinusOne + nMinusTwo;
     print('\t- nMinusOne: ${nMinusOne}, nMinusTwo: ${nMinusTwo}');
+
+    result = nMinusOne + nMinusTwo;
+
     fibDatabase.putIfAbsent(
       n,
       () => result,
