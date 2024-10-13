@@ -1,0 +1,10 @@
+{
+    "configurations": [
+        {
+            "name": "Dart (fib.dart)",
+            "type": "dart",
+            "request": "launch",
+            "program": "fib.dart",
+        }
+    ]
+}
