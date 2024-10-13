@@ -1,7 +1,12 @@
+import 'dart:math' as math;
+
 Map<int, int> fibDatabase = {};
 
 int fib(int n) {
-  if (n < 0) {
+  if (n > 92) {
+    throw Exception(
+        'Results cannot be calculated for n > 92 due to Dart precision limit.');
+  } else if (n < 0) {
     throw Exception('n must be a positive integer.');
   } else if (n <= 1) {
     fibDatabase[n] = n;
@@ -18,11 +23,20 @@ int fib(int n) {
     result = nMinusOne + nMinusTwo;
     fibDatabase[n] = result; // Save the new result so it can be used later.
 
+    if (result > math.pow(2, 63) - 1) {
+      throw Exception(
+          'result cannot be greater than 2^63 - 1 due to Dart precision limit.');
+    }
+
     if (result < 0) {
-      throw Exception('result < 0 for n = $n: $result.\n'
+      throw Exception(
+          'result cannot be greater than 2^63 - 1 due to Dart precision limit. Results above this limit will overflow so will be < 0. Result for n = $n: $result.\n'
           '\t- nMinusOne (${n - 1}): $nMinusOne\n'
           '\t- nMinusTwo (${n - 2}): $nMinusTwo\n'
-          '\t- nMinusOne + nMinusTwo: ${nMinusOne + nMinusTwo}\n');
+          '\t- nMinusOne + nMinusTwo: ${nMinusOne + nMinusTwo}\n'
+          '\n\t- 2^53 + 1: ${math.pow(2, 53) + 1}\n'
+          '\t- 2^63 - 1: ${math.pow(2, 63) - 1}\n'
+          '\t- 2^64: ${math.pow(2, 64)}');
     }
 
     return result;
